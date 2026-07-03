@@ -4,10 +4,10 @@
  * README for the regeneration one-liner) and are imported directly here, so
  * they live in memory with zero store reads. English is the default.
  */
-import contentEn from "./content.en.json";
-import contentDe from "./content.de.json";
-import uiEn from "./ui.en.json";
-import uiDe from "./ui.de.json";
+import contentEn from "./content.en.json" with { type: "json" };
+import contentDe from "./content.de.json" with { type: "json" };
+import uiEn from "./ui.en.json" with { type: "json" };
+import uiDe from "./ui.de.json" with { type: "json" };
 
 export type Lang = "en" | "de";
 export type Pack = Record<string, any>;
