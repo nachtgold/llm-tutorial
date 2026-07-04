@@ -2,6 +2,9 @@
   "name": "llm-tutorial",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "author": "nachtgold",
+  "repository": "github:nachtgold/llm-tutorial",
   "type": "module",
   "scripts": {
     "dev": "vercel dev",

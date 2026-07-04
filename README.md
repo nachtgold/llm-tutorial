@@ -2,8 +2,8 @@
 
 A small, mobile-first web app that teaches **anyone** (no prior AI knowledge
 needed) the most important concepts around large language models (LLMs) in
-**~60 minutes** — through short **mini-games**, data-driven **visualizations**
-(D3), a **real GPT tokenizer**, an optional **on-device language model**, and a
+**~60 minutes** — through short **mini-games**, data-driven **visualizations**,
+a **real GPT tokenizer**, an optional **on-device language model**, and a
 **closing quiz** with personal reflection tips.
 
 The app runs on **Vercel** as TypeScript serverless functions. It works fully
@@ -92,7 +92,7 @@ lib/file-store.ts    – local/offline file-backed store (LOCAL_STORE_DIR)
 lib/session.ts       – stateless admin session (HMAC-signed cookie)
 lib/i18n.ts          – language resolver (lang cookie → pack; English default)
 lang/*.json          – course content + UI strings per language (see below)
-public/assets/       – app.js, style.css, d3, gpt-tokenizer, qrcode (served statically)
+public/assets/       – app.js, style.css, gpt-tokenizer, qrcode (served statically)
 vercel.json          – routes "/" → render, "/api" → api
 ```
 
@@ -187,4 +187,12 @@ cd tests/ui && npm install && npx playwright test
   stronger in English than German, so this demo runs in English; the German
   chapter explains why. Without consent the chapter shows a static example; an
   easter egg is hidden in the temperature game.
+
+## License
+
+[MIT](LICENSE) © 2026 nachtgold
+
+Vendored third-party libraries and runtime-loaded components (transformers.js,
+the on-device model) are listed with their licenses in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
