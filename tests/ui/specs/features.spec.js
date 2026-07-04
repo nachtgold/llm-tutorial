@@ -2,9 +2,9 @@
 // attention, cost, prompt injection, on-device fallback, easter egg, results.
 // We jump directly to the flow position via localStorage (solo mode).
 const { test, expect } = require("@playwright/test");
-const { resetDb, seedState, soloAt, POS } = require("./helpers");
+const { resetStore, seedState, soloAt, POS } = require("./helpers");
 
-test.beforeEach(() => resetDb());
+test.beforeEach(() => resetStore());
 
 test("real GPT tokenizer splits text into tokens", async ({ page }) => {
   await seedState(page, soloAt(POS.tokenizer));

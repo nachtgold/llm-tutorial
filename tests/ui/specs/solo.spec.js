@@ -1,8 +1,8 @@
 // Solo play style: a user clicks through the app without a journey.
 const { test, expect } = require("@playwright/test");
-const { resetDb, dismissConsent } = require("./helpers");
+const { resetStore, dismissConsent } = require("./helpers");
 
-test.beforeEach(() => resetDb());
+test.beforeEach(() => resetStore());
 
 test("cover shows start + admin entry in solo mode (stacked CTA)", async ({ page }) => {
   await page.goto("/");

@@ -1,8 +1,8 @@
 // Admin role: login, dashboard, create/start/unlock/end a journey.
 const { test, expect } = require("@playwright/test");
-const { resetDb } = require("./helpers");
+const { resetStore } = require("./helpers");
 
-test.beforeEach(() => resetDb());
+test.beforeEach(() => resetStore());
 
 test("admin login rejects wrong password", async ({ page }) => {
   await page.goto("/");

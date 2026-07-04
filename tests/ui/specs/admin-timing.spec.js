@@ -5,9 +5,9 @@
 // (in the lobby = approved) → start the journey → each reports chapter 2.
 // Then the moderation opens the dashboard in the browser and checks the displays.
 const { test, expect } = require("@playwright/test");
-const { resetDb, apiAdmin } = require("./helpers");
+const { resetStore, apiAdmin } = require("./helpers");
 
-test.beforeEach(() => resetDb());
+test.beforeEach(() => resetStore());
 
 async function loginDashboard(page) {
   await page.goto("/");
@@ -26,7 +26,7 @@ test("live journey shows timer, distribution badges, frontier + unlock nudge", a
   const players = [];
   for (let i = 0; i < 3; i++) {
     const ctx = await playwright.request.newContext({ baseURL });
-    await ctx.post("/api.php?action=join");
+    await ctx.post("/api?action=join");
     players.push(ctx);
   }
 
@@ -35,7 +35,7 @@ test("live journey shows timer, distribution badges, frontier + unlock nudge", a
 
   // 4) All report chapter 2 (i.e. beyond the unlocked chapter 0).
   for (const ctx of players) {
-    await ctx.post("/api.php?action=pos", { data: { chapter: 2 } });
+    await ctx.post("/api?action=pos", { data: { chapter: 2 } });
   }
 
   // 5) Open the dashboard and check the pacing displays.
@@ -55,7 +55,7 @@ test("live journey shows timer, distribution badges, frontier + unlock nudge", a
 test("timer counts up over time", async ({ page, request, playwright, baseURL }) => {
   await apiAdmin(request, { create: "Tick-Test" });
   const ctx = await playwright.request.newContext({ baseURL });
-  await ctx.post("/api.php?action=join");
+  await ctx.post("/api?action=join");
   await apiAdmin(request, { start: true });
 
   await loginDashboard(page);

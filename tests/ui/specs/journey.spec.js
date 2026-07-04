@@ -1,9 +1,9 @@
 // Journey play style: a player joins, waits in the lobby and is advanced
 // on start (by the moderation) without a reload.
 const { test, expect } = require("@playwright/test");
-const { resetDb, apiAdmin } = require("./helpers");
+const { resetStore, apiAdmin } = require("./helpers");
 
-test.beforeEach(() => resetDb());
+test.beforeEach(() => resetStore());
 
 test("player sees join button when a journey is in the lobby", async ({ page, request }) => {
   await apiAdmin(request, { create: "Lobby-Test" });

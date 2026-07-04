@@ -1,5 +1,5 @@
 /**
- * HTTP entry point for the JSON API (the rewritten `api.php?action=…`).
+ * HTTP entry point for the JSON API (`/api?action=…`).
  * Thin wrapper: builds the request context, calls apiDispatch(), writes the
  * result + any Set-Cookie headers. All logic lives in lib/api.ts.
  */
@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   try {
     result = await apiDispatch(store, action, input, ctx);
   } catch (e) {
-    console.error(`api.php [${action}]:`, e);
+    console.error(`api [${action}]:`, e);
     result = { code: 500, body: { ok: false, error: "server" } };
   }
 

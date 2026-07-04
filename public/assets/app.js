@@ -67,7 +67,7 @@
 
   // Small JSON API call. Always returns an object (never throws).
   function api(action, payload, method) {
-    return fetch("api.php?action=" + action, {
+    return fetch("api?action=" + action, {
       method: method || "POST",
       headers: { "Content-Type": "application/json" },
       body: payload ? JSON.stringify(payload) : null,
@@ -655,7 +655,7 @@
     var a = q("#jArchive"); if (a) a.onclick = function () { if (confirm(T.confirm_end_journey)) { adminCohort = null; api("admin_archive").then(loadConsole); } };
     var del = q("#jDelete"); if (del) del.onclick = function () {
       var msg = j && j.status === "lobby" ? T.confirm_cancel_lobby : T.confirm_delete_journey;
-      if (confirm(msg)) { adminCohort = null; api("admin_delete", { id: parseInt(del.getAttribute("data-id"), 10) }).then(loadConsole); }
+      if (confirm(msg)) { adminCohort = null; api("admin_delete", { id: del.getAttribute("data-id") }).then(loadConsole); }
     };
     qa(".unlock-pill").forEach(function (pill) {
       pill.onclick = function () { api("admin_unlock", { chapter: parseInt(pill.getAttribute("data-ch"), 10) }).then(loadConsole); };

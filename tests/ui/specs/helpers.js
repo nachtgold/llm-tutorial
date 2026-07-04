@@ -1,27 +1,32 @@
 // Shared helpers for the UI specs.
 const path = require("path");
-const { execFileSync } = require("child_process");
+const fs = require("fs");
 
-const DB_FILE = path.join(__dirname, "..", ".tmp", "ui-test.sqlite");
-const SETUP = path.join(__dirname, "..", "setup.php");
-const ENV = { ...process.env, LLMGAME_DB_DSN: "sqlite:" + DB_FILE };
+const STORE_DIR = path.join(__dirname, "..", ".tmp", "store");
 const STORE_KEY = "llmgame_v1";
 
-/** Empties all tables and re-seeds the admin (clean state per test). */
-function resetDb() {
-  execFileSync("php", [SETUP, "--reset"], { env: ENV, stdio: "pipe" });
+/**
+ * Clean state per test: wipe the file store and recreate the `journeys/` and
+ * `players/` subdirs the running server writes into (it only creates them once,
+ * at startup — see lib/file-store.ts). The admin comes from env, so there is no
+ * database to seed. Mirrors global-setup.js, which resets once before the run.
+ */
+function resetStore() {
+  fs.rmSync(STORE_DIR, { recursive: true, force: true });
+  fs.mkdirSync(path.join(STORE_DIR, "journeys"), { recursive: true });
+  fs.mkdirSync(path.join(STORE_DIR, "players"), { recursive: true });
 }
 
 /** Logs in as admin via the API and optionally creates a journey. */
 async function apiAdmin(request, { create = null, start = false } = {}) {
-  await request.post("/api.php?action=admin_login", {
+  await request.post("/api?action=admin_login", {
     data: { username: "admin", password: "secret" },
   });
   if (create !== null) {
-    await request.post("/api.php?action=admin_create", { data: { name: create } });
+    await request.post("/api?action=admin_create", { data: { name: create } });
   }
   if (start) {
-    await request.post("/api.php?action=admin_start");
+    await request.post("/api?action=admin_start");
   }
 }
 
@@ -55,4 +60,4 @@ const POS = {
   cost: 26, injection: 30, ondevice: 32, results: 52,
 };
 
-module.exports = { resetDb, apiAdmin, seedState, dismissConsent, soloAt, POS };
+module.exports = { resetStore, apiAdmin, seedState, dismissConsent, soloAt, POS };

@@ -69,7 +69,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   const vreq: any = { headers: req.headers, query, url: req.url, body: undefined };
-  if (url.pathname === "/api.php") {
+  if (url.pathname === "/api") {
     vreq.body = await readBody(req);
     await apiHandler(vreq, adaptRes(res));
     return;

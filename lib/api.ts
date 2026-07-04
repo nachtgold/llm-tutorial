@@ -1,5 +1,5 @@
 /**
- * JSON API for journey mode (port of api.php).
+ * JSON API for journey mode.
  *
  * All logic lives in apiDispatch() and returns { code, body } — so it is called
  * directly in tests (no HTTP). The HTTP entry point is api/index.ts.

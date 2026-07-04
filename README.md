@@ -84,7 +84,7 @@ framework and no build step of your own (Vercel bundles the functions):
 
 ```
 api/render.ts        – server-renders the HTML shell, embeds content as JSON, builds the QR URL
-api/index.ts         – JSON API (rewritten from /api.php?action=…) — thin HTTP wrapper
+api/index.ts         – JSON API (/api?action=…) — thin HTTP wrapper
 lib/api.ts           – apiDispatch(): all journey/admin actions (returns {code, body})
 lib/sync.ts          – journey logic (client state, presence, identities, timing)
 lib/store.ts         – storage facade → Blob (source of truth) + Edge Config (projection)
@@ -93,11 +93,11 @@ lib/session.ts       – stateless admin session (HMAC-signed cookie)
 lib/i18n.ts          – language resolver (lang cookie → pack; English default)
 lang/*.json          – course content + UI strings per language (see below)
 public/assets/       – app.js, style.css, d3, gpt-tokenizer, qrcode (served statically)
-vercel.json          – routes "/" → render, "/api.php" → api
+vercel.json          – routes "/" → render, "/api" → api
 ```
 
-Routing (`vercel.json`): `"/"` rewrites to `api/render`; `"/api.php"` rewrites to
-`api/index` so `assets/app.js` (unchanged) keeps calling `fetch("api.php?action=…")`.
+Routing (`vercel.json`): `"/"` rewrites to `api/render`; `"/api"` rewrites to
+`api/index`, which `assets/app.js` calls via `fetch("api?action=…")`.
 
 ## Storage (journey mode)
 
