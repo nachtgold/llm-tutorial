@@ -675,6 +675,7 @@
   // ---- LECTURE PAGE (explanation, no game) ----
   function renderLecture(ch) {
     var c = catOf(ch.cat);
+    maybeAiConsent();     // one-time opt-in gate — nothing downloads without it
     maybeStartAiLoad(ch); // preload the on-device model in the home stretch (never on the cover)
     APP.innerHTML =
       topbar(true) +
@@ -1573,6 +1574,31 @@
   var AI_MODEL = "LiquidAI/LFM2.5-350M-ONNX";
   function notifyAi() { if (typeof aiState.observer === "function") aiState.observer(); }
 
+  // ---- One-time on-device AI consent dialog ("at the start" of the lectures).
+  // The model NEVER downloads until the user opts in here (or taps the load
+  // button in the on-device chapter). Shown once, while aiOptIn is still unset.
+  var aiConsentEl = null;
+  function closeConsent() { if (aiConsentEl) { aiConsentEl.remove(); aiConsentEl = null; } }
+  function showAiConsent() {
+    if (aiConsentEl) return;
+    aiConsentEl = document.createElement("div");
+    aiConsentEl.className = "ai-consent";
+    aiConsentEl.innerHTML =
+      '<div class="aic-card">' +
+        '<div class="aic-emoji">🤖</div>' +
+        '<div class="h2">' + esc(T.aic_title) + "</div>" +
+        '<p class="muted">' + T.aic_body + "</p>" +
+        '<div class="aic-btns"><button class="btn" id="aicYes">' + esc(T.aic_yes) + "</button>" +
+          '<button class="btn secondary" id="aicNo">' + esc(T.aic_no) + "</button></div>" +
+      "</div>";
+    document.body.appendChild(aiConsentEl);
+    q("#aicYes", aiConsentEl).onclick = function () { state.aiOptIn = true; save(); closeConsent(); loadAiModel(); };
+    q("#aicNo", aiConsentEl).onclick = function () { state.aiOptIn = false; save(); closeConsent(); };
+  }
+  function maybeAiConsent() {
+    if (state.aiOptIn === undefined && !aiConsentEl) showAiConsent();
+  }
+
   // Preloads the model in the background so it's ready in the final chapter –
   // but only in the home stretch (≤ 3 chapters before the demo). This saves
   // bandwidth for everyone who doesn't get that far, and finishes in time when
@@ -1580,6 +1606,7 @@
   // (renderCover never calls this). LFM2.5-350M is small and doesn't crash → no
   // reload loop.
   function maybeStartAiLoad(ch) {
+    if (state.aiOptIn !== true) return;  // strictly opt-in: no download without consent
     if (aiState.status !== "idle") return;
     var chs = D.chapters, od = -1, ci = -1, i;
     for (i = 0; i < chs.length; i++) {
@@ -1700,7 +1727,7 @@
       root.innerHTML =
         '<p class="hint">' + esc(T.mag_idle) + "</p>" +
         '<button class="btn" id="magLoad">' + esc(T.mag_load_btn) + "</button>" + staticExample();
-      q("#magLoad", root).onclick = function () { loadAiModel(); paint(); };
+      q("#magLoad", root).onclick = function () { state.aiOptIn = true; save(); loadAiModel(); paint(); };
     }
     aiState.observer = paint;
     maybeStartAiLoad(); // landed here directly (no preload ran)? → load now

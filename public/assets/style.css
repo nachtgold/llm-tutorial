@@ -687,6 +687,13 @@ input[type=range]::-webkit-slider-thumb {
 .ms-row { display: flex; gap: 10px; font-size: 14px; padding: 6px 0; border-top: 1px solid rgba(255,255,255,.05); }
 .ms-lbl { flex: 0 0 84px; color: var(--muted); }
 
+/* ---- On-device AI consent dialog (one-time opt-in gate) ---- */
+.ai-consent { position: fixed; inset: 0; z-index: 60; background: rgba(5,8,20,.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.aic-card { width: 100%; max-width: 380px; background: #161d3b; border: 1px solid var(--card-br); border-radius: 20px; padding: 22px; text-align: center; box-shadow: var(--shadow); animation: pop .3s ease both; }
+.aic-emoji { font-size: 44px; }
+.aic-card p { font-size: 14.5px; line-height: 1.55; }
+.aic-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
 /* ---- Offline banner (journey sync) ---- */
 .offline-banner { position: fixed; left: 0; right: 0; top: 0; z-index: 55; background: var(--warn); color: #1b1300; font-size: 13px; font-weight: 600; text-align: center; padding: calc(8px + var(--safe-t)) 12px 8px; }
 

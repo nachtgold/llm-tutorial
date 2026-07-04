@@ -11,7 +11,7 @@ import { first, makeCtx } from "../lib/http.js";
 import { pack } from "../lang/index.js";
 
 const store = createStore();
-const VER = "18";
+const VER = "19";
 
 /** HTML-escape for attribute/text contexts (like htmlspecialchars, ENT_QUOTES). */
 function esc(s: string): string {

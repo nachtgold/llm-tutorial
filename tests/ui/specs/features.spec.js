@@ -27,7 +27,7 @@ test("attention reveals which word the pronoun attends to", async ({ page }) => 
   await page.goto("/");
   await page.locator(".attn-tok.focus").click();
   await expect(page.locator(".attn-top").first()).toBeVisible();
-  await expect(page.locator("#anote")).toContainText("Schlüssel");
+  await expect(page.locator("#anote")).toContainText("Pokal");
 });
 
 test("cost calculator shows a monthly figure in euros", async ({ page }) => {
