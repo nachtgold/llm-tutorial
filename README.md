@@ -19,6 +19,10 @@ Designed for use over screen sharing: the start page shows a **QR code** that
 participants scan with their phone to open the app directly in the browser. The
 layout targets **iPhone 15–17** (and similar smartphones).
 
+## Demo
+
+https://llm-interactive-tutorial.vercel.app/
+
 ## Content
 
 - **58 terms** in a filterable glossary (tokens, prompt, embedding, similarity,
@@ -175,7 +179,6 @@ cd tests/ui && npm install && npx playwright test
 
 ### Vendored libraries & on-device model
 
-- `public/assets/d3.v7.min.js` — D3 (meaning map, attention, RAG), vendored offline.
 - `public/assets/gpt-tokenizer.cl100k.js` — real GPT BPE tokenizer (global `GPTTokenizer_cl100k_base`).
 - The **on-device model** (chapter 16, "text magician") is **strictly opt-in**:
   only after consent is `@huggingface/transformers` (transformers.js) loaded via
@@ -184,4 +187,4 @@ cd tests/ui && npm install && npx playwright test
   stronger in English than German, so this demo runs in English; the German
   chapter explains why. Without consent the chapter shows a static example; an
   easter egg is hidden in the temperature game.
-```
+
