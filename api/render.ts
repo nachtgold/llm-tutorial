@@ -11,7 +11,7 @@ import { first, makeCtx } from "../lib/http.js";
 import { pack } from "../lang/index.js";
 
 const store = createStore();
-const VER = "19";
+const VER = "20";
 
 /** HTML-escape for attribute/text contexts (like htmlspecialchars, ENT_QUOTES). */
 function esc(s: string): string {
@@ -60,6 +60,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
 <link rel="stylesheet" href="assets/style.css?v=${VER}">
 </head>
 <body>
+<a class="gh-ribbon" href="https://github.com/nachtgold/llm-tutorial" target="_blank" rel="noopener" aria-label="Fork me on GitHub">Fork me on GitHub</a>
 <div id="app" class="app"><!-- filled by app.js --></div>
 
 <script>

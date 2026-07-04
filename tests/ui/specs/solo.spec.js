@@ -32,6 +32,16 @@ test("app shell: body doesn't scroll, content scrolls internally (stable mobile 
   expect(r.barFixed).toBe(false);
 });
 
+test("'Fork me on GitHub' ribbon: visible on desktop, hidden on mobile (no room)", async ({ page }) => {
+  const ribbon = page.locator(".gh-ribbon");
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto("/");
+  await expect(ribbon).toBeVisible();
+  await expect(ribbon).toHaveAttribute("href", /github\.com\/nachtgold\/llm-tutorial/);
+  await page.setViewportSize({ width: 393, height: 852 });
+  await expect(ribbon).toBeHidden();
+});
+
 test("can start the course and reach a lecture", async ({ page }) => {
   await page.goto("/");
   await page.locator("#startBtn").click();

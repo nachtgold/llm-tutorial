@@ -461,6 +461,24 @@ input[type=range]::-webkit-slider-thumb {
   .actionbar { border-radius: 0 0 34px 34px; }
 }
 
+/* ---- "Fork me on GitHub" corner ribbon (desktop only — no room on mobile) ---- */
+.gh-ribbon { display: none; }
+@media (min-width: 640px) {
+  .gh-ribbon {
+    display: block; position: fixed; z-index: 70;
+    top: 32px; right: -52px; width: 200px;
+    transform: rotate(45deg);
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #fff; text-align: center; text-decoration: none;
+    font-size: 13px; font-weight: 700; letter-spacing: .2px;
+    padding: 7px 0;
+    box-shadow: 0 6px 18px rgba(0,0,0,.4);
+    border-top: 1px solid rgba(255,255,255,.28);
+    border-bottom: 1px solid rgba(0,0,0,.28);
+  }
+  .gh-ribbon:hover { filter: brightness(1.09); }
+}
+
 /* ===========================================================================
    Journey mode (lobby, toast, admin console)
    =========================================================================== */
